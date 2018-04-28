@@ -14,6 +14,8 @@ Assumptions
 ## Done
 - create model
 - test model
+- create api
+- test api
 
 
 ## Deferred/revisit
