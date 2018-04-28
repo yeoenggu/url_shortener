@@ -55,6 +55,9 @@ group :development, :test do
   gem 'pry-nav'
   gem "better_errors"
   gem "binding_of_caller"
+
+  # for testing 
+  gem 'rspec-rails', '~> 3.5'
 end
 
 group :development do
@@ -72,6 +75,11 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+
+  gem 'factory_bot_rails', '~> 4.0'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'faker'
+  gem 'database_cleaner'
 end
 
 

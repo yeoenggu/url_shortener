@@ -1,24 +1,26 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Overview
 
-Things you may want to cover:
+# Model branch
 
-* Ruby version
+## Overview
+This is where I create the model.  Test the model.  
+I start with simple base32.  
 
-* System dependencies
+Assumptions
+- make use of database id, assume it would be unique
 
-* Configuration
+## Done
+- create model
+- test model
 
-* Database creation
 
-* Database initialization
+## Deferred/revisit
+- better algo 
+	- for encoding
+	- make use of the given url as seed?
+	- generate my own random number
+- normalize url?
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Notes
