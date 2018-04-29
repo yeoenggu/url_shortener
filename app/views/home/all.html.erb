@@ -1,0 +1,24 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Full url</th>
+        <th>Short Link</th>
+        <th>Clicks</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @links.each do |link| %>
+        <tr>
+          <td><%= link.full_url %></td>
+          <td><%= link_to link.display_slug, link.slug, target: '_blank' %></td>
+          <td><%= link.clicks %></td>
+          <td><%= link_to 'Show', link %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

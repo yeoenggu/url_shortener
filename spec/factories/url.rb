@@ -10,14 +10,4 @@ FactoryBot.define do
     sequence(:id) { FactoryBot.generate(:random_ranking) }
     sequence(:clicks) { FactoryBot.generate(:random_ranking) }
   end
-
-  # factory :link_click do
-  #   sequence(:full_url) { |n| "#{Faker::Internet.url}/#{n}" }
-
-  # end
-
-  # factory :link_accessed, parent: :url do
-  #   sequence(:clicks) {|n| n }
-  # end
-
 end

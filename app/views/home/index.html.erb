@@ -1,0 +1,27 @@
+<div class="title">
+  <h1>Trending links</h1>
+</div>
+
+<div class="row">
+  <% @top_links.each do |link| %>
+    <div class="col-sm-3">
+      <div class="card sm-3 box-shadow">
+        <div class="card-body">
+            <h5 class="card-title"><%= link.id %></h5>
+            <p class="card-text "><%= link_to link.display_slug, link.slug, target: '_blank' %></p>
+            <ul class="list-group h-auto">
+              <li class="list-group-item"><span class="badge"><span class="clicks"><%= link.clicks %></span></span> clicks</li>
+              <li class="list-group-item">
+                <p class=""><%= link_to truncate(link.full_url, length: 60), link.full_url %></p>  
+              </li>
+            </ul>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"><%= time_ago_in_words(link.created_at) %> ago</small>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<p class="bottom_nav"><%= link_to 'See all of the links', '/all' %></p>

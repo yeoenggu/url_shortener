@@ -11,11 +11,18 @@ I start with simple base32.
 Assumptions
 - make use of database id, assume it would be unique
 
+# TO DO
+- test specs
+
+
+
 ## Done
 - create model
 - test model
 - create api
 - test api
+- create controller
+- create view
 
 
 ## Deferred/revisit

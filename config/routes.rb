@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'home#index'
+  resources :links
+  get '/all' => 'home#all'
+  get ':slug' => 'links#show'
+
   namespace :api do
     namespace :v1 do
       get "/stats", to: "links#get_stats"
