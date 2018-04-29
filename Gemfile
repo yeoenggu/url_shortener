@@ -42,7 +42,7 @@ gem 'will_paginate', '~> 3.0'
 gem 'bootstrap', '~> 4.1.0'
 gem 'jquery-rails'  # required by bootstrap
 gem 'jquery-validation-rails'
-
+gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
