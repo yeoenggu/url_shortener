@@ -2034,3 +2034,843 @@ Completed 200 OK in 98ms (Views: 87.6ms | ActiveRecord: 2.2ms)
   [1m[35m (0.9ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m
   [1m[35m (0.9ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m
   [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m
+  [1m[36mAhoy::Visit Load (0.8ms)[0m  [1m[34mSELECT "ahoy_visits".* FROM "ahoy_visits"[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rake:9
+  [1m[35m (41.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ bin/rake:9
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rake:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ bin/rake:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rake:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ bin/rake:9
+  [1m[35m (354.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "url_shortener_development"[0m
+  ↳ bin/rake:9
+  [1m[35m (298.4ms)[0m  [1m[35mDROP DATABASE IF EXISTS "url_shortener_test"[0m
+  ↳ bin/rake:9
+  [1m[35m (3353.9ms)[0m  [1m[35mCREATE DATABASE "url_shortener_development" ENCODING = 'unicode'[0m
+  ↳ bin/rake:9
+  [1m[35m (1182.3ms)[0m  [1m[35mCREATE DATABASE "url_shortener_test" ENCODING = 'unicode'[0m
+  ↳ bin/rake:9
+  [1m[35mSQL (0.6ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  ↳ db/schema.rb:16
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "ahoy_events" CASCADE[0m
+  ↳ db/schema.rb:18
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE TABLE "ahoy_events" ("id" bigserial primary key, "visit_id" bigint, "user_id" bigint, "name" character varying, "properties" jsonb, "time" timestamp)[0m
+  ↳ db/schema.rb:18
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE  INDEX  "index_ahoy_events_on_name_and_time" ON "ahoy_events"  ("name", "time")[0m
+  ↳ db/schema.rb:18
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_ahoy_events_on_properties_jsonb_path_ops" ON "ahoy_events" USING gin ("properties" jsonb_path_ops)[0m
+  ↳ db/schema.rb:18
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_ahoy_events_on_user_id" ON "ahoy_events"  ("user_id")[0m
+  ↳ db/schema.rb:18
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_ahoy_events_on_visit_id" ON "ahoy_events"  ("visit_id")[0m
+  ↳ db/schema.rb:18
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "ahoy_visits" CASCADE[0m
+  ↳ db/schema.rb:30
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "ahoy_visits" ("id" bigserial primary key, "visit_token" character varying, "visitor_token" character varying, "ip" character varying, "user_agent" text, "referrer" text, "referring_domain" character varying, "search_keyword" character varying, "landing_page" text, "browser" character varying, "os" character varying, "device_type" character varying, "country" character varying, "region" character varying, "city" character varying, "started_at" timestamp)[0m
+  ↳ db/schema.rb:30
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_ahoy_visits_on_visit_token" ON "ahoy_visits"  ("visit_token")[0m
+  ↳ db/schema.rb:30
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "links" CASCADE[0m
+  ↳ db/schema.rb:49
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE TABLE "links" ("id" bigserial primary key, "full_url" character varying, "slug" character varying, "clicks" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "visit_id" bigint)[0m
+  ↳ db/schema.rb:49
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20180430050030)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20180427182220),
+(20180430045346);
+
+[0m
+  ↳ db/schema.rb:13
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ db/schema.rb:13
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Create (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-04-30 05:49:22.550379"], ["updated_at", "2018-04-30 05:49:22.550379"]]
+  ↳ db/schema.rb:13
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rake:9
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rake:9
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rake:9
+  [1m[35mSQL (0.5ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  ↳ db/schema.rb:16
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "ahoy_events" CASCADE[0m
+  ↳ db/schema.rb:18
+  [1m[35m (6.6ms)[0m  [1m[35mCREATE TABLE "ahoy_events" ("id" bigserial primary key, "visit_id" bigint, "user_id" bigint, "name" character varying, "properties" jsonb, "time" timestamp)[0m
+  ↳ db/schema.rb:18
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_ahoy_events_on_name_and_time" ON "ahoy_events"  ("name", "time")[0m
+  ↳ db/schema.rb:18
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_ahoy_events_on_properties_jsonb_path_ops" ON "ahoy_events" USING gin ("properties" jsonb_path_ops)[0m
+  ↳ db/schema.rb:18
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_ahoy_events_on_user_id" ON "ahoy_events"  ("user_id")[0m
+  ↳ db/schema.rb:18
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE  INDEX  "index_ahoy_events_on_visit_id" ON "ahoy_events"  ("visit_id")[0m
+  ↳ db/schema.rb:18
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "ahoy_visits" CASCADE[0m
+  ↳ db/schema.rb:30
+  [1m[35m (40.0ms)[0m  [1m[35mCREATE TABLE "ahoy_visits" ("id" bigserial primary key, "visit_token" character varying, "visitor_token" character varying, "ip" character varying, "user_agent" text, "referrer" text, "referring_domain" character varying, "search_keyword" character varying, "landing_page" text, "browser" character varying, "os" character varying, "device_type" character varying, "country" character varying, "region" character varying, "city" character varying, "started_at" timestamp)[0m
+  ↳ db/schema.rb:30
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_ahoy_visits_on_visit_token" ON "ahoy_visits"  ("visit_token")[0m
+  ↳ db/schema.rb:30
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "links" CASCADE[0m
+  ↳ db/schema.rb:49
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "links" ("id" bigserial primary key, "full_url" character varying, "slug" character varying, "clicks" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "visit_id" bigint)[0m
+  ↳ db/schema.rb:49
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20180430050030)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20180427182220),
+(20180430045346);
+
+[0m
+  ↳ db/schema.rb:13
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ db/schema.rb:13
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Create (0.8ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-04-30 05:49:22.680425"], ["updated_at", "2018-04-30 05:49:22.680425"]]
+  ↳ db/schema.rb:13
+  [1m[35m (65.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rake:9
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rake:9
+  [1m[36mActiveRecord::InternalMetadata Update (0.3ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2018-04-30 05:49:22.750977"], ["key", "environment"]]
+  ↳ bin/rake:9
+  [1m[35m (34.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rake:9
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rake:9
+Started GET "/" for 127.0.0.1 at 2018-04-30 13:50:05 +0800
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+Processing by HomeController#index as HTML
+  [1m[36mLink Load (0.5ms)[0m  [1m[34mSELECT  "links".* FROM "links" ORDER BY "links"."clicks" DESC LIMIT $1[0m  [["LIMIT", 12]]
+  ↳ app/controllers/home_controller.rb:5
+  Rendering home/index.html.erb within layouts/main
+  Rendered home/index.html.erb within layouts/main (9.3ms)
+  Rendered links/_form.html.erb (29.8ms)
+  Rendered layouts/_new_link.html.erb (32.7ms)
+  [1m[36mAhoy::Visit Load (0.7ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "815a8f22-ddbf-4567-97e1-420c836c1b4b"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ config/initializers/ahoy.rb:4
+  [1m[36mAhoy::Visit Create (0.6ms)[0m  [1m[32mINSERT INTO "ahoy_visits" ("visit_token", "visitor_token", "ip", "user_agent", "landing_page", "browser", "os", "device_type", "started_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["visit_token", "815a8f22-ddbf-4567-97e1-420c836c1b4b"], ["visitor_token", "e120f081-dc09-4aad-b40b-e88613c38627"], ["ip", "127.0.0.1"], ["user_agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"], ["landing_page", "http://localhost:3000/"], ["browser", "Chrome"], ["os", "Mac OS X"], ["device_type", "Desktop"], ["started_at", "2018-04-30 05:50:06.415229"]]
+  ↳ config/initializers/ahoy.rb:4
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ config/initializers/ahoy.rb:4
+[ActiveJob] Enqueued Ahoy::GeocodeV2Job (Job ID: f8ebe49e-9bba-4a88-860a-6dcc07ee69cd) to Async(ahoy) with arguments: "815a8f22-ddbf-4567-97e1-420c836c1b4b", "127.0.0.1"
+[ActiveJob] [Ahoy::GeocodeV2Job] [f8ebe49e-9bba-4a88-860a-6dcc07ee69cd] Performing Ahoy::GeocodeV2Job (Job ID: f8ebe49e-9bba-4a88-860a-6dcc07ee69cd) from Async(ahoy) with arguments: "815a8f22-ddbf-4567-97e1-420c836c1b4b", "127.0.0.1"
+  [1m[35m (1.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (1.3ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 1], ["name", "Ran action"], ["properties", "{\"controller\":\"home\",\"action\":\"index\"}"], ["time", "2018-04-30 05:50:06.401305"]]
+  ↳ app/controllers/application_controller.rb:7
+[ActiveJob] [Ahoy::GeocodeV2Job] [f8ebe49e-9bba-4a88-860a-6dcc07ee69cd]   [1m[36mAhoy::Visit Load (1.8ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "815a8f22-ddbf-4567-97e1-420c836c1b4b"], ["LIMIT", 1]]
+[ActiveJob] [Ahoy::GeocodeV2Job] [f8ebe49e-9bba-4a88-860a-6dcc07ee69cd]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+[ActiveJob] [Ahoy::GeocodeV2Job] [f8ebe49e-9bba-4a88-860a-6dcc07ee69cd]   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+Completed 200 OK in 1199ms (Views: 735.6ms | ActiveRecord: 15.9ms)
+
+
+[ActiveJob] [Ahoy::GeocodeV2Job] [f8ebe49e-9bba-4a88-860a-6dcc07ee69cd]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [f8ebe49e-9bba-4a88-860a-6dcc07ee69cd]   [1m[36mAhoy::Visit Update (0.6ms)[0m  [1m[33mUPDATE "ahoy_visits" SET "country" = $1 WHERE "ahoy_visits"."id" = $2[0m  [["country", "Reserved"], ["id", 1]]
+[ActiveJob] [Ahoy::GeocodeV2Job] [f8ebe49e-9bba-4a88-860a-6dcc07ee69cd]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [f8ebe49e-9bba-4a88-860a-6dcc07ee69cd]   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] [Ahoy::GeocodeV2Job] [f8ebe49e-9bba-4a88-860a-6dcc07ee69cd]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [f8ebe49e-9bba-4a88-860a-6dcc07ee69cd] Performed Ahoy::GeocodeV2Job (Job ID: f8ebe49e-9bba-4a88-860a-6dcc07ee69cd) from Async(ahoy) in 191.31ms
+Started POST "/links" for 127.0.0.1 at 2018-04-30 13:50:12 +0800
+Processing by LinksController#create as JS
+  Parameters: {"utf8"=>"✓", "link"=>{"full_url"=>"https://mothership.sg"}, "commit"=>"Shorten Me"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/links_controller.rb:19
+  [1m[36mLink Exists (0.9ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."full_url" = $1 LIMIT $2[0m  [["full_url", "https://mothership.sg"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:19
+  [1m[36mLink Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."slug" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:19
+  [1m[36mAhoy::Visit Load (0.6ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "815a8f22-ddbf-4567-97e1-420c836c1b4b"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:19
+  [1m[36mLink Create (0.9ms)[0m  [1m[32mINSERT INTO "links" ("full_url", "clicks", "created_at", "updated_at", "visit_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["full_url", "https://mothership.sg"], ["clicks", 0], ["created_at", "2018-04-30 05:50:12.333342"], ["updated_at", "2018-04-30 05:50:12.333342"], ["visit_id", 1]]
+  ↳ app/controllers/links_controller.rb:19
+  [1m[36mLink Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."full_url" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["full_url", "https://mothership.sg"], ["id", 1], ["LIMIT", 1]]
+  ↳ app/models/link.rb:12
+  [1m[36mLink Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."slug" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["slug", "1"], ["id", 1], ["LIMIT", 1]]
+  ↳ app/models/link.rb:12
+  [1m[36mLink Update (0.3ms)[0m  [1m[33mUPDATE "links" SET "slug" = $1, "updated_at" = $2 WHERE "links"."id" = $3[0m  [["slug", "1"], ["updated_at", "2018-04-30 05:50:12.342636"], ["id", 1]]
+  ↳ app/models/link.rb:12
+  [1m[35m (39.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/links_controller.rb:19
+  Rendering links/create.js.erb
+  Rendered links/create.js.erb (0.8ms)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (0.9ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 1], ["name", "Ran action"], ["properties", "{\"controller\":\"links\",\"action\":\"create\"}"], ["time", "2018-04-30 05:50:12.400311"]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+Completed 200 OK in 78ms (Views: 11.7ms | ActiveRecord: 45.0ms)
+
+
+Started GET "/1" for 138.75.147.215 at 2018-04-30 13:50:15 +0800
+Cannot render console from 138.75.147.215! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by LinksController#show as HTML
+  Parameters: {"slug"=>"1"}
+  [1m[36mLink Load (0.2ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "1"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:33
+  [1m[36mCACHE Link Load (0.0ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "1"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:6
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/link.rb:21
+  [1m[36mLink Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."full_url" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["full_url", "https://mothership.sg"], ["id", 1], ["LIMIT", 1]]
+  ↳ app/models/link.rb:21
+  [1m[36mLink Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."slug" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["slug", "1"], ["id", 1], ["LIMIT", 1]]
+  ↳ app/models/link.rb:21
+  [1m[36mLink Update (0.3ms)[0m  [1m[33mUPDATE "links" SET "clicks" = $1, "updated_at" = $2 WHERE "links"."id" = $3[0m  [["clicks", 1], ["updated_at", "2018-04-30 05:50:15.315245"], ["id", 1]]
+  ↳ app/models/link.rb:21
+  [1m[35m (40.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/models/link.rb:21
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/links_controller.rb:9
+  [1m[36mLink Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."full_url" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["full_url", "https://mothership.sg"], ["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:9
+  [1m[36mLink Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."slug" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["slug", "1"], ["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:9
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/links_controller.rb:9
+Redirected to https://mothership.sg
+  [1m[36mAhoy::Visit Load (0.4ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "1d995935-c14a-4386-b44a-638f7a07c7a7"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ config/initializers/ahoy.rb:4
+  [1m[36mAhoy::Visit Create (0.9ms)[0m  [1m[32mINSERT INTO "ahoy_visits" ("visit_token", "visitor_token", "ip", "user_agent", "referrer", "referring_domain", "landing_page", "browser", "os", "device_type", "started_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"[0m  [["visit_token", "1d995935-c14a-4386-b44a-638f7a07c7a7"], ["visitor_token", "fcfdfb42-86aa-470b-a040-cd1b92e1c63c"], ["ip", "138.75.147.215"], ["user_agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"], ["referrer", "http://localhost:3000/"], ["referring_domain", "localhost"], ["landing_page", "https://17a3cee3.ngrok.io/1"], ["browser", "Chrome"], ["os", "Mac OS X"], ["device_type", "Desktop"], ["started_at", "2018-04-30 05:50:15.364693"]]
+  ↳ config/initializers/ahoy.rb:4
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ config/initializers/ahoy.rb:4
+[ActiveJob] [Ahoy::GeocodeV2Job] [591b623f-bf63-4ffb-88f4-cea6fd38144c] Performing Ahoy::GeocodeV2Job (Job ID: 591b623f-bf63-4ffb-88f4-cea6fd38144c) from Async(ahoy) with arguments: "1d995935-c14a-4386-b44a-638f7a07c7a7", "138.75.147.215"
+[ActiveJob] Enqueued Ahoy::GeocodeV2Job (Job ID: 591b623f-bf63-4ffb-88f4-cea6fd38144c) to Async(ahoy) with arguments: "1d995935-c14a-4386-b44a-638f7a07c7a7", "138.75.147.215"
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (0.6ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 2], ["name", "Ran action"], ["properties", "{\"controller\":\"links\",\"action\":\"show\",\"slug\":\"1\"}"], ["time", "2018-04-30 05:50:15.363014"]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+Completed 301 Moved Permanently in 76ms (ActiveRecord: 46.1ms)
+
+
+[ActiveJob] [Ahoy::GeocodeV2Job] [591b623f-bf63-4ffb-88f4-cea6fd38144c]   [1m[36mAhoy::Visit Load (0.5ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "1d995935-c14a-4386-b44a-638f7a07c7a7"], ["LIMIT", 1]]
+[ActiveJob] [Ahoy::GeocodeV2Job] [591b623f-bf63-4ffb-88f4-cea6fd38144c]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [591b623f-bf63-4ffb-88f4-cea6fd38144c]   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+[ActiveJob] [Ahoy::GeocodeV2Job] [591b623f-bf63-4ffb-88f4-cea6fd38144c]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [591b623f-bf63-4ffb-88f4-cea6fd38144c]   [1m[36mAhoy::Visit Update (0.5ms)[0m  [1m[33mUPDATE "ahoy_visits" SET "country" = $1, "region" = $2, "city" = $3 WHERE "ahoy_visits"."id" = $4[0m  [["country", "Singapore"], ["region", "Central Singapore Community Development Council"], ["city", "Singapore"], ["id", 2]]
+[ActiveJob] [Ahoy::GeocodeV2Job] [591b623f-bf63-4ffb-88f4-cea6fd38144c]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [591b623f-bf63-4ffb-88f4-cea6fd38144c]   [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] [Ahoy::GeocodeV2Job] [591b623f-bf63-4ffb-88f4-cea6fd38144c]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [591b623f-bf63-4ffb-88f4-cea6fd38144c] Performed Ahoy::GeocodeV2Job (Job ID: 591b623f-bf63-4ffb-88f4-cea6fd38144c) from Async(ahoy) in 529.32ms
+Started GET "/" for 127.0.0.1 at 2018-04-30 13:50:17 +0800
+Processing by HomeController#index as HTML
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT  "links".* FROM "links" ORDER BY "links"."clicks" DESC LIMIT $1[0m  [["LIMIT", 12]]
+  ↳ app/controllers/home_controller.rb:5
+  Rendering home/index.html.erb within layouts/main
+  Rendered home/index.html.erb within layouts/main (1.5ms)
+  Rendered links/_form.html.erb (2.1ms)
+  Rendered layouts/_new_link.html.erb (5.5ms)
+  [1m[36mAhoy::Visit Load (0.5ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "815a8f22-ddbf-4567-97e1-420c836c1b4b"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (0.3ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 1], ["name", "Ran action"], ["properties", "{\"controller\":\"home\",\"action\":\"index\"}"], ["time", "2018-04-30 05:50:17.156153"]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+Completed 200 OK in 139ms (Views: 126.5ms | ActiveRecord: 2.1ms)
+
+
+Started POST "/links" for 127.0.0.1 at 2018-04-30 13:50:22 +0800
+Processing by LinksController#create as JS
+  Parameters: {"utf8"=>"✓", "link"=>{"full_url"=>"https://www.cpf.gov.sg"}, "commit"=>"Shorten Me"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/links_controller.rb:19
+  [1m[36mLink Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."full_url" = $1 LIMIT $2[0m  [["full_url", "https://www.cpf.gov.sg"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:19
+  [1m[36mLink Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."slug" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:19
+  [1m[36mAhoy::Visit Load (0.4ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "815a8f22-ddbf-4567-97e1-420c836c1b4b"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:19
+  [1m[36mLink Create (0.4ms)[0m  [1m[32mINSERT INTO "links" ("full_url", "clicks", "created_at", "updated_at", "visit_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["full_url", "https://www.cpf.gov.sg"], ["clicks", 0], ["created_at", "2018-04-30 05:50:22.486728"], ["updated_at", "2018-04-30 05:50:22.486728"], ["visit_id", 1]]
+  ↳ app/controllers/links_controller.rb:19
+  [1m[36mLink Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."full_url" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["full_url", "https://www.cpf.gov.sg"], ["id", 2], ["LIMIT", 1]]
+  ↳ app/models/link.rb:12
+  [1m[36mLink Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."slug" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["slug", "2"], ["id", 2], ["LIMIT", 1]]
+  ↳ app/models/link.rb:12
+  [1m[36mLink Update (0.3ms)[0m  [1m[33mUPDATE "links" SET "slug" = $1, "updated_at" = $2 WHERE "links"."id" = $3[0m  [["slug", "2"], ["updated_at", "2018-04-30 05:50:22.492669"], ["id", 2]]
+  ↳ app/models/link.rb:12
+  [1m[35m (40.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/links_controller.rb:19
+  Rendering links/create.js.erb
+  Rendered links/create.js.erb (0.8ms)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (0.5ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 1], ["name", "Ran action"], ["properties", "{\"controller\":\"links\",\"action\":\"create\"}"], ["time", "2018-04-30 05:50:22.550207"]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+Completed 200 OK in 73ms (Views: 11.4ms | ActiveRecord: 44.1ms)
+
+
+Started GET "/2" for 138.75.147.215 at 2018-04-30 13:50:23 +0800
+Cannot render console from 138.75.147.215! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by LinksController#show as HTML
+  Parameters: {"slug"=>"2"}
+  [1m[36mLink Load (0.2ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "2"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:33
+  [1m[36mCACHE Link Load (0.0ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "2"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:6
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/link.rb:21
+  [1m[36mLink Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."full_url" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["full_url", "https://www.cpf.gov.sg"], ["id", 2], ["LIMIT", 1]]
+  ↳ app/models/link.rb:21
+  [1m[36mLink Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."slug" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["slug", "2"], ["id", 2], ["LIMIT", 1]]
+  ↳ app/models/link.rb:21
+  [1m[36mLink Update (0.3ms)[0m  [1m[33mUPDATE "links" SET "clicks" = $1, "updated_at" = $2 WHERE "links"."id" = $3[0m  [["clicks", 1], ["updated_at", "2018-04-30 05:50:23.878383"], ["id", 2]]
+  ↳ app/models/link.rb:21
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/models/link.rb:21
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/links_controller.rb:9
+  [1m[36mLink Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."full_url" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["full_url", "https://www.cpf.gov.sg"], ["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:9
+  [1m[36mLink Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."slug" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["slug", "2"], ["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:9
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/links_controller.rb:9
+Redirected to https://www.cpf.gov.sg
+  [1m[36mAhoy::Visit Load (0.4ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "1d995935-c14a-4386-b44a-638f7a07c7a7"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (0.4ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 2], ["name", "Ran action"], ["properties", "{\"controller\":\"links\",\"action\":\"show\",\"slug\":\"2\"}"], ["time", "2018-04-30 05:50:23.883536"]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+Completed 301 Moved Permanently in 14ms (ActiveRecord: 3.4ms)
+
+
+Started GET "/2" for 138.75.147.215 at 2018-04-30 13:50:27 +0800
+Cannot render console from 138.75.147.215! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by LinksController#show as HTML
+  Parameters: {"slug"=>"2"}
+  [1m[36mLink Load (0.3ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "2"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:33
+  [1m[36mCACHE Link Load (0.0ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "2"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:6
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/link.rb:21
+  [1m[36mLink Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."full_url" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["full_url", "https://www.cpf.gov.sg"], ["id", 2], ["LIMIT", 1]]
+  ↳ app/models/link.rb:21
+  [1m[36mLink Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."slug" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["slug", "2"], ["id", 2], ["LIMIT", 1]]
+  ↳ app/models/link.rb:21
+  [1m[36mLink Update (0.3ms)[0m  [1m[33mUPDATE "links" SET "clicks" = $1, "updated_at" = $2 WHERE "links"."id" = $3[0m  [["clicks", 2], ["updated_at", "2018-04-30 05:50:27.597749"], ["id", 2]]
+  ↳ app/models/link.rb:21
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/models/link.rb:21
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/links_controller.rb:9
+  [1m[36mLink Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."full_url" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["full_url", "https://www.cpf.gov.sg"], ["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:9
+  [1m[36mLink Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "links" WHERE "links"."slug" = $1 AND "links"."id" != $2 LIMIT $3[0m  [["slug", "2"], ["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:9
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/links_controller.rb:9
+Redirected to https://www.cpf.gov.sg
+  [1m[36mAhoy::Visit Load (0.3ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "1d995935-c14a-4386-b44a-638f7a07c7a7"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (0.3ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 2], ["name", "Ran action"], ["properties", "{\"controller\":\"links\",\"action\":\"show\",\"slug\":\"2\"}"], ["time", "2018-04-30 05:50:27.603045"]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+Completed 301 Moved Permanently in 15ms (ActiveRecord: 3.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-04-30 13:50:30 +0800
+Processing by HomeController#index as HTML
+  [1m[36mLink Load (0.5ms)[0m  [1m[34mSELECT  "links".* FROM "links" ORDER BY "links"."clicks" DESC LIMIT $1[0m  [["LIMIT", 12]]
+  ↳ app/controllers/home_controller.rb:5
+  Rendering home/index.html.erb within layouts/main
+  Rendered home/index.html.erb within layouts/main (2.8ms)
+  Rendered links/_form.html.erb (1.9ms)
+  Rendered layouts/_new_link.html.erb (6.1ms)
+  [1m[36mAhoy::Visit Load (0.6ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "815a8f22-ddbf-4567-97e1-420c836c1b4b"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (0.4ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 1], ["name", "Ran action"], ["properties", "{\"controller\":\"home\",\"action\":\"index\"}"], ["time", "2018-04-30 05:50:30.349880"]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+Completed 200 OK in 130ms (Views: 117.7ms | ActiveRecord: 2.2ms)
+
+
+  [1m[36mAhoy::Visit Load (0.6ms)[0m  [1m[34mSELECT "ahoy_visits".* FROM "ahoy_visits"[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(8112849748291978620)[0m
+  ↳ bin/rake:9
+  [1m[35m (20.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rake:9
+Migrating to InstallBlazer (20180430060518)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rake:9
+  [1m[35m (52.2ms)[0m  [1m[35mCREATE TABLE "blazer_queries" ("id" bigserial primary key, "creator_id" bigint, "name" character varying, "description" text, "statement" text, "data_source" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:3
+  [1m[35m (35.6ms)[0m  [1m[35mCREATE  INDEX  "index_blazer_queries_on_creator_id" ON "blazer_queries"  ("creator_id")[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:3
+  [1m[35m (9.7ms)[0m  [1m[35mCREATE TABLE "blazer_audits" ("id" bigserial primary key, "user_id" bigint, "query_id" bigint, "statement" text, "data_source" character varying, "created_at" timestamp)[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:12
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_blazer_audits_on_user_id" ON "blazer_audits"  ("user_id")[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:12
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_blazer_audits_on_query_id" ON "blazer_audits"  ("query_id")[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:12
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "blazer_dashboards" ("id" bigserial primary key, "creator_id" bigint, "name" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:20
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_blazer_dashboards_on_creator_id" ON "blazer_dashboards"  ("creator_id")[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:20
+  [1m[35m (27.0ms)[0m  [1m[35mCREATE TABLE "blazer_dashboard_queries" ("id" bigserial primary key, "dashboard_id" bigint, "query_id" bigint, "position" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:26
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE  INDEX  "index_blazer_dashboard_queries_on_dashboard_id" ON "blazer_dashboard_queries"  ("dashboard_id")[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:26
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_blazer_dashboard_queries_on_query_id" ON "blazer_dashboard_queries"  ("query_id")[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:26
+  [1m[35m (56.9ms)[0m  [1m[35mCREATE TABLE "blazer_checks" ("id" bigserial primary key, "creator_id" bigint, "query_id" bigint, "state" character varying, "schedule" character varying, "emails" text, "check_type" character varying, "message" text, "last_run_at" timestamp, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:33
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_blazer_checks_on_creator_id" ON "blazer_checks"  ("creator_id")[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:33
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_blazer_checks_on_query_id" ON "blazer_checks"  ("query_id")[0m
+  ↳ db/migrate/20180430060518_install_blazer.rb:33
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180430060518"]]
+  ↳ bin/rake:9
+  [1m[35m (73.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rake:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rake:9
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rake:9
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rake:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(8112849748291978620)[0m
+  ↳ bin/rake:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rake:9
+Started GET "/" for 127.0.0.1 at 2018-04-30 14:12:03 +0800
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+Processing by HomeController#index as HTML
+  [1m[36mLink Load (0.5ms)[0m  [1m[34mSELECT  "links".* FROM "links" ORDER BY "links"."clicks" DESC LIMIT $1[0m  [["LIMIT", 12]]
+  ↳ app/controllers/home_controller.rb:5
+  Rendering home/index.html.erb within layouts/main
+  Rendered home/index.html.erb within layouts/main (4.3ms)
+  Rendered links/_form.html.erb (35.6ms)
+  Rendered layouts/_new_link.html.erb (38.6ms)
+  [1m[36mAhoy::Visit Load (0.5ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "815a8f22-ddbf-4567-97e1-420c836c1b4b"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (0.7ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 1], ["name", "Ran action"], ["properties", "{\"controller\":\"home\",\"action\":\"index\"}"], ["time", "2018-04-30 06:12:14.012179"]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (39.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+Completed 200 OK in 10162ms (Views: 10026.5ms | ActiveRecord: 52.0ms)
+
+
+Started GET "/blazer" for 127.0.0.1 at 2018-04-30 14:12:39 +0800
+Processing by LinksController#show as HTML
+  Parameters: {"slug"=>"blazer"}
+  [1m[36mLink Load (0.5ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "blazer"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:33
+  [1m[36mCACHE Link Load (0.0ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "blazer"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:6
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.8ms)
+
+
+
+NoMethodError - undefined method `full_url' for nil:NilClass:
+  app/controllers/links_controller.rb:7:in `show'
+
+Started POST "/__better_errors/e4f0ce084f2f5e56/variables" for 127.0.0.1 at 2018-04-30 14:12:40 +0800
+Started GET "/" for 127.0.0.1 at 2018-04-30 14:13:09 +0800
+Processing by HomeController#index as HTML
+  [1m[36mLink Load (0.6ms)[0m  [1m[34mSELECT  "links".* FROM "links" ORDER BY "links"."clicks" DESC LIMIT $1[0m  [["LIMIT", 12]]
+  ↳ app/controllers/home_controller.rb:5
+  Rendering home/index.html.erb within layouts/main
+  Rendered home/index.html.erb within layouts/main (1.7ms)
+  Rendered links/_form.html.erb (1.0ms)
+  Rendered layouts/_new_link.html.erb (4.3ms)
+  [1m[36mAhoy::Visit Load (0.9ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "815a8f22-ddbf-4567-97e1-420c836c1b4b"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (0.8ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 1], ["name", "Ran action"], ["properties", "{\"controller\":\"home\",\"action\":\"index\"}"], ["time", "2018-04-30 06:13:09.702517"]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+Completed 200 OK in 94ms (Views: 84.1ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/blazer/dashboards" for 127.0.0.1 at 2018-04-30 14:14:00 +0800
+Processing by Blazer::DashboardsController#index as HTML
+Redirected to http://localhost:3000/blazer/?filter=dashboards
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/blazer/?filter=dashboards" for 127.0.0.1 at 2018-04-30 14:14:00 +0800
+Processing by LinksController#show as HTML
+  Parameters: {"filter"=>"dashboards", "slug"=>"blazer"}
+  [1m[36mLink Load (0.3ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "blazer"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:33
+  [1m[36mCACHE Link Load (0.0ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "blazer"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:6
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.3ms)
+
+
+
+NoMethodError - undefined method `full_url' for nil:NilClass:
+  app/controllers/links_controller.rb:7:in `show'
+
+Started POST "/__better_errors/531373813a3114ef/variables" for 127.0.0.1 at 2018-04-30 14:14:00 +0800
+Started GET "/" for 127.0.0.1 at 2018-04-30 14:15:13 +0800
+Processing by HomeController#index as HTML
+  [1m[36mLink Load (0.5ms)[0m  [1m[34mSELECT  "links".* FROM "links" ORDER BY "links"."clicks" DESC LIMIT $1[0m  [["LIMIT", 12]]
+  ↳ app/controllers/home_controller.rb:5
+  Rendering home/index.html.erb within layouts/main
+  Rendered home/index.html.erb within layouts/main (1.4ms)
+  Rendered links/_form.html.erb (1.8ms)
+  Rendered layouts/_new_link.html.erb (6.0ms)
+  [1m[36mAhoy::Visit Load (0.8ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "815a8f22-ddbf-4567-97e1-420c836c1b4b"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/application_controller.rb:7
+  [1m[36mAhoy::Event Create (0.5ms)[0m  [1m[32mINSERT INTO "ahoy_events" ("visit_id", "name", "properties", "time") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["visit_id", 1], ["name", "Ran action"], ["properties", "{\"controller\":\"home\",\"action\":\"index\"}"], ["time", "2018-04-30 06:15:13.248101"]]
+  ↳ app/controllers/application_controller.rb:7
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/application_controller.rb:7
+Completed 200 OK in 88ms (Views: 74.2ms | ActiveRecord: 2.6ms)
+
+
+Started GET "/blazer" for 127.0.0.1 at 2018-04-30 14:15:23 +0800
+Processing by LinksController#show as HTML
+  Parameters: {"slug"=>"blazer"}
+  [1m[36mLink Load (0.3ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "blazer"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:33
+  [1m[36mCACHE Link Load (0.0ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."slug" = $1 LIMIT $2[0m  [["slug", "blazer"], ["LIMIT", 1]]
+  ↳ app/controllers/links_controller.rb:6
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.3ms)
+
+
+
+NoMethodError - undefined method `full_url' for nil:NilClass:
+  app/controllers/links_controller.rb:7:in `show'
+
+Started POST "/__better_errors/b41d5c456e81d292/variables" for 127.0.0.1 at 2018-04-30 14:15:23 +0800
+Started POST "/__better_errors/b41d5c456e81d292/variables" for 127.0.0.1 at 2018-04-30 14:16:04 +0800
+Started POST "/__better_errors/b41d5c456e81d292/variables" for 127.0.0.1 at 2018-04-30 14:16:06 +0800
+Started GET "/blazer" for 127.0.0.1 at 2018-04-30 14:17:35 +0800
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+Processing by Blazer::QueriesController#home as HTML
+  [1m[36mBlazer::Query Load (0.8ms)[0m  [1m[34mSELECT  "blazer_queries"."id", "blazer_queries"."name", "blazer_queries"."creator_id", "blazer_queries"."statement" FROM "blazer_queries" WHERE (blazer_queries.name <> '') ORDER BY "blazer_queries"."name" ASC LIMIT $1[0m  [["LIMIT", 1000]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Dashboard Load (0.9ms)[0m  [1m[34mSELECT "blazer_dashboards".* FROM "blazer_dashboards" ORDER BY "blazer_dashboards"."name" ASC[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/home.html.erb within layouts/blazer/application
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/home.html.erb within layouts/blazer/application (5.1ms)
+Completed 200 OK in 863ms (Views: 820.6ms | ActiveRecord: 4.8ms)
+
+
+Started GET "/blazer/queries/new" for 127.0.0.1 at 2018-04-30 14:17:41 +0800
+Processing by Blazer::QueriesController#new as HTML
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/new.html.erb within layouts/blazer/application
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/_form.html.erb (225.0ms)
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/new.html.erb within layouts/blazer/application (232.6ms)
+Completed 200 OK in 326ms (Views: 302.3ms | ActiveRecord: 3.6ms)
+
+
+Started GET "/blazer/queries/tables?data_source=main" for 127.0.0.1 at 2018-04-30 14:17:41 +0800
+Processing by Blazer::QueriesController#tables as JSON
+  Parameters: {"data_source"=>"main"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (68.5ms)[0m  [1m[34mSELECT table_name FROM information_schema.tables WHERE table_schema IN ('public') ORDER BY table_name /*blazer*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+No serializer found for resource: "ahoy_events"
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with Array (0.33ms)
+Completed 200 OK in 139ms (Views: 67.5ms | ActiveRecord: 68.9ms)
+
+
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:17:47 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"SELECT * FROM \"ahoy_visits\" LIMIT 10", "data_source"=>"main", "run_id"=>"2d864205-d965-4da3-92b1-7a8dc7c7fc19"}
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (1.0ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "SELECT * FROM \"ahoy_visits\" LIMIT 10"], ["data_source", "main"], ["created_at", "2018-04-30 06:17:47.025871"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (13.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT * FROM "ahoy_visits" LIMIT 10 /*blazer,run_id:2d864205-d965-4da3-92b1-7a8dc7c7fc19*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (4.3ms)
+Completed 200 OK in 53ms (Views: 11.4ms | ActiveRecord: 19.7ms)
+
+
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:17:55 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"SELECT * FROM \"ahoy_visits\" LIMIT 10", "data_source"=>"main", "run_id"=>"b6e19c22-6c2c-4773-9c5e-9d129157fa5e"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (0.3ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "SELECT * FROM \"ahoy_visits\" LIMIT 10"], ["data_source", "main"], ["created_at", "2018-04-30 06:17:55.675264"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT * FROM "ahoy_visits" LIMIT 10 /*blazer,run_id:b6e19c22-6c2c-4773-9c5e-9d129157fa5e*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (5.3ms)
+Completed 200 OK in 20ms (Views: 13.1ms | ActiveRecord: 1.4ms)
+
+
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:17:57 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"SELECT * FROM \"ahoy_events\" LIMIT 10", "data_source"=>"main", "run_id"=>"4757c993-1e26-41af-b0cc-9df2f6be0583"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (0.6ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "SELECT * FROM \"ahoy_events\" LIMIT 10"], ["data_source", "main"], ["created_at", "2018-04-30 06:17:57.784328"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (40.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT * FROM "ahoy_events" LIMIT 10 /*blazer,run_id:4757c993-1e26-41af-b0cc-9df2f6be0583*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (4.4ms)
+Completed 200 OK in 59ms (Views: 10.2ms | ActiveRecord: 42.5ms)
+
+
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:18:01 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"SELECT * FROM \"ahoy_visits\" LIMIT 10", "data_source"=>"main", "run_id"=>"b68f109c-a60b-4f98-8f07-8c4b5dd21ec5"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (0.3ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "SELECT * FROM \"ahoy_visits\" LIMIT 10"], ["data_source", "main"], ["created_at", "2018-04-30 06:18:01.559081"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT * FROM "ahoy_visits" LIMIT 10 /*blazer,run_id:b68f109c-a60b-4f98-8f07-8c4b5dd21ec5*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (4.2ms)
+Completed 200 OK in 18ms (Views: 10.2ms | ActiveRecord: 1.6ms)
+
+
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:18:47 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"SELECT * FROM \"links\" LIMIT 10", "data_source"=>"main", "run_id"=>"ba61dbdd-388e-4040-9712-47ede97a90de"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (0.3ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "SELECT * FROM \"links\" LIMIT 10"], ["data_source", "main"], ["created_at", "2018-04-30 06:18:47.855293"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT * FROM "links" LIMIT 10 /*blazer,run_id:ba61dbdd-388e-4040-9712-47ede97a90de*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (128.2ms)
+Completed 200 OK in 142ms (Views: 134.6ms | ActiveRecord: 2.0ms)
+
+
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:18:53 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"SELECT * FROM \"ahoy_events\" LIMIT 10", "data_source"=>"main", "run_id"=>"efd215b7-cca2-4556-8e9a-da8378ae35aa"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (0.3ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "SELECT * FROM \"ahoy_events\" LIMIT 10"], ["data_source", "main"], ["created_at", "2018-04-30 06:18:53.567720"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT * FROM "ahoy_events" LIMIT 10 /*blazer,run_id:efd215b7-cca2-4556-8e9a-da8378ae35aa*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (4.3ms)
+Completed 200 OK in 21ms (Views: 10.7ms | ActiveRecord: 3.3ms)
+
+
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, "ahoy_visits"."search_keyword" AS ahoy_visits_search_keyword FROM "ahoy_visits" GROUP BY "ahoy_visits"."search_keyword"[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, country AS country FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY country[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, city AS city FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY city[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:23:49 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"\"SELECT \\\"links\\\".* FROM \\\"links\\\" INNER JOIN \\\"ahoy_visits\\\" ON \\\"ahoy_visits\\\".\\\"id\\\" = \\\"links\\\".\\\"visit_id\\\" GROUP BY device_type\"", "data_source"=>"main", "run_id"=>"eaf774a6-411c-469e-913b-6293016fb75a"}
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (0.5ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "\"SELECT \\\"links\\\".* FROM \\\"links\\\" INNER JOIN \\\"ahoy_visits\\\" ON \\\"ahoy_visits\\\".\\\"id\\\" = \\\"links\\\".\\\"visit_id\\\" GROUP BY device_type\""], ["data_source", "main"], ["created_at", "2018-04-30 06:23:49.539220"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (39.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (13.5ms)[0m  [1m[35m"SELECT \"links\".* FROM \"links\" INNER JOIN \"ahoy_visits\" ON \"ahoy_visits\".\"id\" = \"links\".\"visit_id\" GROUP BY device_type" /*blazer,run_id:eaf774a6-411c-469e-913b-6293016fb75a*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (3.3ms)
+Completed 200 OK in 71ms (Views: 9.5ms | ActiveRecord: 54.6ms)
+
+
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:23:59 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"SELECT \\\"links\\\".* FROM \\\"links\\\" INNER JOIN \\\"ahoy_visits\\\" ON \\\"ahoy_visits\\\".\\\"id\\\" = \\\"links\\\".\\\"visit_id\\\" GROUP BY device_type", "data_source"=>"main", "run_id"=>"099a1fdd-2f2b-4940-9582-35d6a796aad3"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (0.3ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "SELECT \\\"links\\\".* FROM \\\"links\\\" INNER JOIN \\\"ahoy_visits\\\" ON \\\"ahoy_visits\\\".\\\"id\\\" = \\\"links\\\".\\\"visit_id\\\" GROUP BY device_type"], ["data_source", "main"], ["created_at", "2018-04-30 06:23:59.809034"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT \"links\".* FROM \"links\" INNER JOIN \"ahoy_visits\" ON \"ahoy_visits\".\"id\" = \"links\".\"visit_id\" GROUP BY device_type /*blazer,run_id:099a1fdd-2f2b-4940-9582-35d6a796aad3*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (3.4ms)
+Completed 200 OK in 16ms (Views: 8.9ms | ActiveRecord: 2.5ms)
+
+
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:24:52 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"SELECT \"links\".* FROM \"links\" INNER JOIN \"ahoy_visits\" ON \"ahoy_visits.id\" = \"links.visit_id\" GROUP BY device_type\r\n", "data_source"=>"main", "run_id"=>"4c7f9478-2128-449c-b11d-b9882cc4a6c9"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (0.5ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "SELECT \"links\".* FROM \"links\" INNER JOIN \"ahoy_visits\" ON \"ahoy_visits.id\" = \"links.visit_id\" GROUP BY device_type\r\n"], ["data_source", "main"], ["created_at", "2018-04-30 06:24:52.223215"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT "links".* FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits.id" = "links.visit_id" GROUP BY device_type
+ /*blazer,run_id:4c7f9478-2128-449c-b11d-b9882cc4a6c9*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (3.5ms)
+Completed 200 OK in 17ms (Views: 9.0ms | ActiveRecord: 3.2ms)
+
+
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:25:01 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"SELECT * FROM \"ahoy_visits\" LIMIT 10", "data_source"=>"main", "run_id"=>"ed14deae-6b0e-46d6-8836-1c0fb26180a4"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (0.3ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "SELECT * FROM \"ahoy_visits\" LIMIT 10"], ["data_source", "main"], ["created_at", "2018-04-30 06:25:01.931321"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT * FROM "ahoy_visits" LIMIT 10 /*blazer,run_id:ed14deae-6b0e-46d6-8836-1c0fb26180a4*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (3.9ms)
+Completed 200 OK in 24ms (Views: 9.3ms | ActiveRecord: 1.7ms)
+
+
+Started POST "/blazer/queries/run" for 127.0.0.1 at 2018-04-30 14:25:22 +0800
+Processing by Blazer::QueriesController#run as HTML
+  Parameters: {"statement"=>"SELECT COUNT(*) AS count_all, device_type AS device_type FROM \"links\" INNER JOIN \"ahoy_visits\" ON \"ahoy_visits\".\"id\" = \"links\".\"visit_id\" GROUP BY device_type", "data_source"=>"main", "run_id"=>"18d0e33b-ef2a-44bf-b981-7e45f15ab819"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[36mBlazer::Audit Create (0.4ms)[0m  [1m[32mINSERT INTO "blazer_audits" ("statement", "data_source", "created_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["statement", "SELECT COUNT(*) AS count_all, device_type AS device_type FROM \"links\" INNER JOIN \"ahoy_visits\" ON \"ahoy_visits\".\"id\" = \"links\".\"visit_id\" GROUP BY device_type"], ["data_source", "main"], ["created_at", "2018-04-30 06:25:22.645155"]]
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type /*blazer,run_id:18d0e33b-ef2a-44bf-b981-7e45f15ab819*/[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+  Rendering /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb
+  Rendered /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/blazer-1.8.2/app/views/blazer/queries/run.html.erb (4.0ms)
+Completed 200 OK in 19ms (Views: 10.4ms | ActiveRecord: 2.5ms)
+
+
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, city AS city FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY city[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, country AS country FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY country[0m
+  [1m[36mAhoy::Visit Load (1.1ms)[0m  [1m[34mSELECT "ahoy_visits".* FROM "ahoy_visits"[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, referrer AS referrer FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY referrer[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, "ahoy_visits"."referrer" AS ahoy_visits_referrer FROM "ahoy_visits" GROUP BY "ahoy_visits"."referrer"[0m
+  [1m[36mLink Load (0.5ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  [1m[36mAhoy::Visit Load (0.5ms)[0m  [1m[34mSELECT "ahoy_visits".* FROM "ahoy_visits"[0m
+  [1m[36mAhoy::Event Load (1.1ms)[0m  [1m[34mSELECT "ahoy_events".* FROM "ahoy_events"[0m
+  [1m[36mLink Load (0.5ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, referrer AS referrer FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY referrer[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, browser AS browser FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY browser[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, user_agent AS user_agent FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY user_agent[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, "ahoy_visits"."referrer" AS ahoy_visits_referrer FROM "ahoy_visits" GROUP BY "ahoy_visits"."referrer"[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, referrer AS referrer FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY referrer[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, country AS country FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY country[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m

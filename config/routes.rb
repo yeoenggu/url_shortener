@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root 'home#index'
+  mount Blazer::Engine, at: "blazer"
+  
   resources :links
   get '/all' => 'home#all'
   get ':slug' => 'links#show'
@@ -9,4 +11,6 @@ Rails.application.routes.draw do
       get "/stats", to: "links#get_stats"
     end
   end
+
+
 end

@@ -3,3 +3,4 @@ BASE_URL: "https://17a3cee3.ngrok.io/"
 
 production:
   BASE_URL: "https://moneysmart-url-shortener.herokuapp.com/"
+  BLAZER_DATABASE_URL: "postgres://mpsufbpwlupxiu:5227fb2b458f1d6aec74ae369b57dc69d4dd6ddd93b740cc3315a1610166e379@ec2-54-243-54-6.compute-1.amazonaws.com:5432/ddmpud2ueqe1u4"
