@@ -4,7 +4,7 @@
   <dt class="col-sm-3">ID:</dt>
   <dd class="col-sm-9"><%= @link.id %></dd>
   <dt class="col-sm-3">Short url</dt>
-  <dd class="col-sm-9"><%= link_to @link.display_slug, @link.display_slug, target: '_blank' %></dd>
+  <dd class="col-sm-9"><%= link_to @link.display_slug, @link.display_slug, id: "short_url_#{@link.id}", target: '_blank' %></dd>
   <dt class="col-sm-3">Full url</dt>
   <dd class="col-sm-9"><%= link_to @link.full_url, @link.full_url %></dd>
   <dt class="col-sm-3">Clicks</dt>

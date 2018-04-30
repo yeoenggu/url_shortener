@@ -58,6 +58,7 @@ group :development, :test do
 
   # for testing 
   gem 'rspec-rails', '~> 3.5'
+  gem 'launchy'
 end
 
 group :development do
