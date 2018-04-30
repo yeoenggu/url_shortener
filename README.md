@@ -47,12 +47,19 @@
 	 - tracking with google analytics
 	  - integrate with google analytics 
 	- more tests
+	- revisit Ahoy
+		- make it run faster
+			- change the datastore
+				- at the moment, every request will cause 2 db transaction.
+				- change it to write to in-memory datastore and schedule jobs to process it further.
+				- interesting side effect that I can implement near real time use case like live view.
+					- put all the shares in real time on a map.
 - MVP
 	- get initial customers and figure out their core use case and the metrics that they are interested
 - Others
 	- I did run into capybara problem in feature testing.
 		- need to turn on tracing to figure out what is really happening.  Ran out of time to do it.
-		
+
 
 
 
