@@ -2874,3 +2874,174 @@ Completed 200 OK in 19ms (Views: 10.4ms | ActiveRecord: 2.5ms)
   [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, referrer AS referrer FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY referrer[0m
   [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, country AS country FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY country[0m
   [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m
+  [1m[36mLink Load (54.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 14:54:37 +0800
+  [1m[35m (11.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+
+SyntaxError - syntax error, unexpected tLABEL
+			render json: link: @link, id
+			                  ^
+/Users/yeoenggu/Projects/moneysmart/url_shortener/app/controllers/api/v1/links_controller.rb:8: syntax error, unexpected '\n', expecting '=':
+  app/controllers/api/v1/links_controller.rb:8:in `'
+
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 14:56:14 +0800
+Processing by Api::V1::LinksController#get_stats as */*
+  Parameters: {"id"=>"1"}
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ config/initializers/ahoy.rb:4
+  [1m[36mAhoy::Visit Create (4.2ms)[0m  [1m[32mINSERT INTO "ahoy_visits" ("visit_token", "visitor_token", "ip", "user_agent", "landing_page", "browser", "os", "device_type", "started_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["visit_token", "1ae278e5-21ca-424d-87ec-3f5fa3ea5a92"], ["visitor_token", "5239a5ee-a1e8-479c-8131-27bb0e0686ed"], ["ip", "127.0.0.1"], ["user_agent", "PostmanRuntime/7.1.1"], ["landing_page", "http://localhost:3000/api/v1/stats?id=1"], ["browser", "Other"], ["os", "Other"], ["device_type", "Desktop"], ["started_at", "2018-04-30 06:56:24.664088"]]
+  ↳ config/initializers/ahoy.rb:4
+  [1m[35m (20.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ config/initializers/ahoy.rb:4
+[ActiveJob] Enqueued Ahoy::GeocodeV2Job (Job ID: 3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d) to Async(ahoy) with arguments: "1ae278e5-21ca-424d-87ec-3f5fa3ea5a92", "127.0.0.1"
+  [1m[36mLink Load (47.2ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/links_controller.rb:7
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.83ms)
+Completed 200 OK in 1009ms (Views: 33.4ms | ActiveRecord: 199.4ms)
+
+
+[ActiveJob] [Ahoy::GeocodeV2Job] [3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d] Performing Ahoy::GeocodeV2Job (Job ID: 3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d) from Async(ahoy) with arguments: "1ae278e5-21ca-424d-87ec-3f5fa3ea5a92", "127.0.0.1"
+[ActiveJob] [Ahoy::GeocodeV2Job] [3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d]   [1m[36mAhoy::Visit Load (1.3ms)[0m  [1m[34mSELECT  "ahoy_visits".* FROM "ahoy_visits" WHERE "ahoy_visits"."visit_token" = $1 ORDER BY "ahoy_visits"."id" ASC LIMIT $2[0m  [["visit_token", "1ae278e5-21ca-424d-87ec-3f5fa3ea5a92"], ["LIMIT", 1]]
+[ActiveJob] [Ahoy::GeocodeV2Job] [3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d]   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+[ActiveJob] [Ahoy::GeocodeV2Job] [3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d]   [1m[36mAhoy::Visit Update (0.4ms)[0m  [1m[33mUPDATE "ahoy_visits" SET "country" = $1 WHERE "ahoy_visits"."id" = $2[0m  [["country", "Reserved"], ["id", 3]]
+[ActiveJob] [Ahoy::GeocodeV2Job] [3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d]   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] [Ahoy::GeocodeV2Job] [3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d]   ↳ /Users/yeoenggu/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [Ahoy::GeocodeV2Job] [3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d] Performed Ahoy::GeocodeV2Job (Job ID: 3cd7b6ab-2e9c-4ae2-ab58-8d21fa352c2d) from Async(ahoy) in 135.02ms
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 14:58:56 +0800
+Processing by Api::V1::LinksController#get_stats as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mLink Load (0.2ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/links_controller.rb:7
+[active_model_serializers] Rendered LinkSerializer with ActiveModelSerializers::Adapter::Attributes (12.35ms)
+Completed 500 Internal Server Error in 204ms (ActiveRecord: 3.7ms)
+
+
+
+NoMethodError - undefined method `access_count' for #<Link:0x00007fa348d767f0>:
+  app/controllers/api/v1/links_controller.rb:9:in `get_stats'
+
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 14:59:38 +0800
+Processing by Api::V1::LinksController#get_stats as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mLink Load (0.2ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/links_controller.rb:7
+[active_model_serializers] Rendered LinkSerializer with ActiveModelSerializers::Adapter::Attributes (0.22ms)
+Completed 200 OK in 40ms (Views: 3.6ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 15:00:03 +0800
+
+SyntaxError - syntax error, unexpected '\n', expecting =>:
+  app/controllers/api/v1/links_controller.rb:9:in `'
+
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 15:00:23 +0800
+
+SyntaxError - syntax error, unexpected ',', expecting =>
+			render json: { @link, @id }
+			                     ^:
+  app/controllers/api/v1/links_controller.rb:9:in `'
+
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 15:00:43 +0800
+Processing by Api::V1::LinksController#get_stats as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mLink Load (0.2ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/links_controller.rb:7
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.5ms)
+Completed 200 OK in 53ms (Views: 17.1ms | ActiveRecord: 3.1ms)
+
+
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 15:01:35 +0800
+Processing by Api::V1::LinksController#get_stats as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mLink Load (0.3ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/links_controller.rb:7
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.14ms)
+Completed 200 OK in 71ms (Views: 17.8ms | ActiveRecord: 6.8ms)
+
+
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 15:03:38 +0800
+Processing by Api::V1::LinksController#get_stats as */*
+  Parameters: {"id"=>"1"}
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, country AS country FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY country[0m
+  ↳ app/controllers/api/v1/links_controller.rb:7
+  [1m[36mLink Load (0.2ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/links_controller.rb:8
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.13ms)
+Completed 200 OK in 102ms (Views: 26.7ms | ActiveRecord: 4.8ms)
+
+
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 15:06:31 +0800
+
+SyntaxError - syntax error, unexpected keyword_else, expecting ')'
+		else
+		    ^:
+  app/controllers/api/v1/links_controller.rb:11:in `'
+
+Started GET "/api/v1/stats?id=1" for 127.0.0.1 at 2018-04-30 15:06:41 +0800
+Processing by Api::V1::LinksController#get_stats as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mLink Load (0.3ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/links_controller.rb:6
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.11ms)
+Completed 200 OK in 61ms (Views: 17.5ms | ActiveRecord: 4.1ms)
+
+
+Started GET "/api/v1/linkstats?id=1" for 127.0.0.1 at 2018-04-30 15:13:36 +0800
+
+SyntaxError - syntax error, unexpected ':', expecting '}'
+		render json { country: @country, browser: @browser, 
+		                      ^
+/Users/yeoenggu/Projects/moneysmart/url_shortener/app/controllers/api/v1/links_controller.rb:30: syntax error, unexpected end-of-input, expecting keyword_end:
+  app/controllers/api/v1/links_controller.rb:22:in `'
+
+Started GET "/api/v1/linkstats?id=1" for 127.0.0.1 at 2018-04-30 15:15:02 +0800
+
+SyntaxError - syntax error, unexpected ':', expecting '}'
+		render json { country: @country, browser: @browser}
+		                      ^
+/Users/yeoenggu/Projects/moneysmart/url_shortener/app/controllers/api/v1/links_controller.rb:30: syntax error, unexpected end-of-input, expecting keyword_end:
+  app/controllers/api/v1/links_controller.rb:22:in `'
+
+Started GET "/api/v1/linkstats?id=1" for 127.0.0.1 at 2018-04-30 15:15:20 +0800
+Processing by Api::V1::LinksController#get_link_stats as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mLink Load (9.4ms)[0m  [1m[34mSELECT  "links".* FROM "links" WHERE "links"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/links_controller.rb:6
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.19ms)
+Completed 200 OK in 231ms (Views: 17.6ms | ActiveRecord: 150.6ms)
+
+
+Started GET "/api/v1/stats" for 127.0.0.1 at 2018-04-30 15:15:33 +0800
+Processing by Api::V1::LinksController#get_stats as */*
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, country AS country FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY country[0m
+  ↳ app/controllers/api/v1/links_controller.rb:16
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, browser AS browser FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY browser[0m
+  ↳ app/controllers/api/v1/links_controller.rb:17
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, city AS city FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY city[0m
+  ↳ app/controllers/api/v1/links_controller.rb:18
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, user_agent AS user_agent FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY user_agent[0m
+  ↳ app/controllers/api/v1/links_controller.rb:19
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) AS count_all, device_type AS device_type FROM "links" INNER JOIN "ahoy_visits" ON "ahoy_visits"."id" = "links"."visit_id" GROUP BY device_type[0m
+  ↳ app/controllers/api/v1/links_controller.rb:20
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.16ms)
+Completed 200 OK in 24ms (Views: 0.6ms | ActiveRecord: 4.3ms)
+
+
+  [1m[35m (38.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rake:9
+  [1m[35m (82.7ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ bin/rake:9
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rake:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ bin/rake:9
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rake:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ bin/rake:9
+  [1m[35m (8639.8ms)[0m  [1m[35mDROP DATABASE IF EXISTS "url_shortener_development"[0m
+  ↳ bin/rake:9

@@ -6,7 +6,7 @@ RSpec.describe "Link API", type: :request do
   let(:link) { FactoryBot.create(:link) }
 
   subject { 
-  	get "/api/v1/stats", params: {id: link.id} 
+  	get "/api/v1/linkstats", params: {id: link.id} 
   	response
   }
 
