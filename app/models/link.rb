@@ -1,4 +1,5 @@
 class Link < ApplicationRecord
+	visitable
 	after_create :generate_slug
 	before_validation :default_clicks
 

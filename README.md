@@ -12,7 +12,7 @@ Assumptions
 - make use of database id, assume it would be unique
 
 # TO DO
-- test specs
+
 
 
 
@@ -23,7 +23,7 @@ Assumptions
 - test api
 - create controller
 - create view
-
+- test specs
 
 ## Deferred/revisit
 - better algo 
@@ -31,5 +31,7 @@ Assumptions
 	- make use of the given url as seed?
 	- generate my own random number
 - normalize url?
+- revisit feature tests
+	- trace capybara 
 
 # Notes
