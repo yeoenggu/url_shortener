@@ -15,8 +15,14 @@ class LinksController < ApplicationController
 
   def create
     @link = Link.new(link_params)
+    
     respond_to do |format|
       if @link.save
+        query = encoding_params
+        if query
+          generate_slug(query)
+        end
+
         format.html { redirect_to @link, notice: 'Link was successfully created.' }
         format.js
         format.json { render :show, status: :created, location: @link }
@@ -28,6 +34,16 @@ class LinksController < ApplicationController
   end
 
   private
+
+    def encoding_params
+      URI.parse(params["link"]["full_url"]).query
+    end
+
+    def generate_slug(query)
+      encoding = query.split('&').select { |element| /encoding/ =~ element }[0].split('=')
+      @link.generate_slug(encoding[1])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_link
       @link = Link.find_by(slug: params[:slug])

@@ -1,5 +1,5 @@
 # dev environment
-BASE_URL: "https://17a3cee3.ngrok.io/"
+BASE_URL: "https://8c77e378.ngrok.io/"
 
 production:
   BASE_URL: "https://moneysmart-url-shortener.herokuapp.com/"

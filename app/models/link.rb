@@ -7,8 +7,9 @@ class Link < ApplicationRecord
   	validates :clicks, presence: true
   	validates :slug, uniqueness: true
 
-	def generate_slug
-		self.slug = self.id.to_s(36)
+	def generate_slug(encoding="base32")
+		# self.slug = self.id.to_s(36)
+    self.slug = BaseEncoder.encode(self.id, encoding)
 		self.save
 	end
 

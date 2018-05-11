@@ -1,3 +1,21 @@
+# Installation
+url_shortener require ruby 2.x and bundler.  
+
+Install the dependencies and start the server.
+
+```sh
+$ cd url_shortener
+$ bundle install
+$ createdb url_shortener_development
+$ createdb url_shortener_test
+$ rake db:migrate
+$ rails s
+```
+
+For production environments...
+Please change the BASE_URL in config/application.xml to point to production server.
+Remember to create the database and run migrations.
+
 # Thought process
 - start from model.  (from back to front)
 	- I build a simple link model with the assumption of a simple algorithm
